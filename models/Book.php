@@ -24,6 +24,7 @@ class Book extends ActiveRecord
             [['title', 'cover_image'], 'string', 'max' => 255],
             [['isbn'], 'string', 'max' => 32],
             [['isbn'], 'unique'],
+            [['authorIds'], 'required', 'message' => 'Выберите хотя бы одного автора'],
             [['authorIds'], 'each', 'rule' => ['integer']],
             [['coverImageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => ['png', 'jpg', 'jpeg', 'webp']],
         ];
