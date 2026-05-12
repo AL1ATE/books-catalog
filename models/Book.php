@@ -8,6 +8,8 @@ class Book extends ActiveRecord
 {
     public array $authorIds = [];
 
+    public $coverImageFile;
+
     public static function tableName(): string
     {
         return '{{%book}}';
@@ -23,6 +25,19 @@ class Book extends ActiveRecord
             [['isbn'], 'string', 'max' => 32],
             [['isbn'], 'unique'],
             [['authorIds'], 'each', 'rule' => ['integer']],
+            [['coverImageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => ['png', 'jpg', 'jpeg', 'webp']],
+        ];
+    }
+
+    public function attributeLabels(): array
+    {
+        return [
+            'title' => 'Название',
+            'publication_year' => 'Год издания',
+            'description' => 'Описание',
+            'isbn' => 'ISBN',
+            'coverImageFile' => 'Обложка',
+            'authorIds' => 'Авторы',
         ];
     }
 
