@@ -11,24 +11,26 @@ $model = new AuthorSubscription();
 $model->author_id = $author->id;
 ?>
 
-<div class="grid-view mt-4">
+<div class="content-card mt-4">
 
-    <h3>Subscribe to new books</h3>
+    <div class="page-label">Подписка</div>
+
+    <h3>Уведомления о новых книгах автора</h3>
+
+    <p class="text-muted">
+        Оставьте телефон, и при добавлении новой книги этого автора будет отправлено SMS.
+    </p>
 
     <?php $form = ActiveForm::begin([
         'action' => ['/subscription/create', 'authorId' => $author->id],
     ]); ?>
 
-    <?= $form->field($model, 'phone')
-        ->textInput([
-            'placeholder' => '+79991234567',
-        ]) ?>
+    <?= $form->field($model, 'phone')->textInput([
+        'placeholder' => '+79991234567',
+    ]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton(
-            'Subscribe',
-            ['class' => 'btn btn-primary']
-        ) ?>
+        <?= Html::submitButton('Подписаться', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

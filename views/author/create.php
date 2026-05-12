@@ -2,10 +2,10 @@
 
 /** @var app\models\Author $model */
 
-$this->title = 'Create Author';
+$this->title = 'Добавить автора';
 ?>
 
-<h1>Create Author</h1>
+<h1>Добавить автора</h1>
 
 <?= $this->render('_form', [
     'model' => $model,

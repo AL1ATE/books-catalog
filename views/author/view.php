@@ -11,14 +11,15 @@ $this->title = $model->full_name;
 <h1><?= Html::encode($model->full_name) ?></h1>
 
 <p>
-    <?= Html::a('Back', ['index'], ['class' => 'btn btn-secondary']) ?>
+    <?= Html::a('Назад', ['index'], ['class' => 'btn btn-outline-light']) ?>
 
     <?php if (!Yii::$app->user->isGuest): ?>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Delete this author?',
+                'confirm' => 'Удалить этого автора?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -27,6 +28,7 @@ $this->title = $model->full_name;
 
 <?= DetailView::widget([
     'model' => $model,
+    'options' => ['class' => 'table detail-view'],
     'attributes' => [
         'id',
         'full_name',

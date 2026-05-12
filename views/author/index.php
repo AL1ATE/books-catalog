@@ -5,23 +5,66 @@ use yii\helpers\Html;
 
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Authors';
+$this->title = 'Авторы';
 ?>
 
-<h1>Authors</h1>
+<div class="page-head">
+    <div>
+        <div class="page-label">Справочник</div>
+        <h1>Авторы</h1>
+    </div>
 
-<?php if (!Yii::$app->user->isGuest): ?>
-    <p><?= Html::a('Create Author', ['create'], ['class' => 'btn btn-success']) ?></p>
-<?php endif; ?>
+    <?php if (!Yii::$app->user->isGuest): ?>
+        <?= Html::a('+ Добавить автора', ['create'], ['class' => 'btn btn-success']) ?>
+    <?php endif; ?>
+</div>
+
+<div class="content-card">
 
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
+
+    'summary' => 'Показано <b>{begin}-{end}</b> из <b>{totalCount}</b>',
+
+    'emptyText' => 'Авторов пока нет',
+
+    'tableOptions' => [
+        'class' => 'table app-table',
+    ],
+
     'columns' => [
-        'id',
-        'full_name',
+
+        [
+            'attribute' => 'full_name',
+
+            'label' => 'ФИО автора',
+
+            'format' => 'raw',
+
+            'value' => static function ($author) {
+                return Html::a(
+                    Html::encode($author->full_name),
+                    ['view', 'id' => $author->id],
+                    ['class' => 'table-title']
+                );
+            },
+        ],
+
         [
             'class' => yii\grid\ActionColumn::class,
-            'template' => Yii::$app->user->isGuest ? '{view}' : '{view} {update} {delete}',
+
+            'header' => 'Действия',
+
+            'template' => Yii::$app->user->isGuest
+                ? '{view}'
+                : '{view} {update} {delete}',
+
+            'contentOptions' => [
+                'class' => 'actions-cell',
+                'style' => 'width:140px;',
+            ],
         ],
     ],
 ]) ?>
+
+</div>

@@ -1,9 +1,9 @@
 <?php
 
-$this->title = 'Create Book';
+$this->title = 'Добавить книгу';
 ?>
 
-<h1>Create Book</h1>
+<h1>Добавить книгу</h1>
 
 <?= $this->render('_form', [
     'model' => $model,

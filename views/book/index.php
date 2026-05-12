@@ -6,42 +6,88 @@ use yii\helpers\Html;
 
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Books';
+$this->title = 'Книги';
 ?>
 
-<h1>Books</h1>
+<div class="page-head">
+    <div>
+        <div class="page-label">Каталог</div>
+        <h1>Книги</h1>
+    </div>
 
-<?php if (!Yii::$app->user->isGuest): ?>
-    <p>
-        <?= Html::a('Create Book', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-<?php endif; ?>
+    <?php if (!Yii::$app->user->isGuest): ?>
+        <?= Html::a('+ Добавить книгу', ['create'], ['class' => 'btn btn-success']) ?>
+    <?php endif; ?>
+</div>
 
-<div class="grid-view">
+<div class="content-card">
 
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
-    'tableOptions' => ['class' => 'table'],
+
+    'summary' => 'Показано <b>{begin}-{end}</b> из <b>{totalCount}</b>',
+
+    'emptyText' => 'Книг пока нет',
+
+    'tableOptions' => [
+        'class' => 'table app-table',
+    ],
+
     'columns' => [
-        'id',
-        'title',
-        'publication_year',
-        'isbn',
+
         [
-            'label' => 'Authors',
+            'attribute' => 'title',
+            'label' => 'Название',
             'format' => 'raw',
             'value' => static function (Book $book) {
-                return implode(', ', array_map(
-                    static fn($author) => $author->full_name,
+                return Html::a(
+                    Html::encode($book->title),
+                    ['view', 'id' => $book->id],
+                    ['class' => 'table-title']
+                );
+            },
+        ],
+
+        [
+            'attribute' => 'publication_year',
+            'label' => 'Год',
+            'contentOptions' => [
+                'style' => 'width:120px;',
+            ],
+        ],
+
+        [
+            'label' => 'Авторы',
+            'format' => 'raw',
+            'value' => static function (Book $book) {
+
+                if (!$book->authors) {
+                    return '<span class="text-muted">—</span>';
+                }
+
+                return implode(' ', array_map(
+                    static fn($author) =>
+                        '<span class="badge-soft">'
+                        . Html::encode($author->full_name)
+                        . '</span>',
                     $book->authors
                 ));
             },
         ],
+
         [
             'class' => yii\grid\ActionColumn::class,
+
+            'header' => 'Действия',
+
             'template' => Yii::$app->user->isGuest
                 ? '{view}'
                 : '{view} {update} {delete}',
+
+            'contentOptions' => [
+                'class' => 'actions-cell',
+                'style' => 'width:140px;',
+            ],
         ],
     ],
 ]) ?>

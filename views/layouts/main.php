@@ -35,15 +35,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav ms-auto align-items-lg-center'],
             'items' => [
-                ['label' => 'Books', 'url' => ['/book/index']],
-                ['label' => 'Authors', 'url' => ['/author/index']],
-                ['label' => 'Report', 'url' => ['/report/index']],
+                ['label' => 'Книги', 'url' => ['/book/index']],
+                ['label' => 'Авторы', 'url' => ['/author/index']],
+                ['label' => 'Отчёт', 'url' => ['/report/index']],
                 Yii::$app->user->isGuest
-                    ? ['label' => 'Login', 'url' => ['/auth/login']]
+                    ? ['label' => 'Войти', 'url' => ['/auth/login']]
                     : '<li class="nav-item">'
                         . Html::beginForm(['/auth/logout'], 'post', ['class' => 'd-inline'])
                         . Html::submitButton(
-                            'Logout (' . Html::encode(Yii::$app->user->identity->username) . ')',
+                            'Выйти (' . Html::encode(Yii::$app->user->identity->username) . ')',
                             ['class' => 'btn btn-outline-light btn-sm ms-lg-3']
                         )
                         . Html::endForm()

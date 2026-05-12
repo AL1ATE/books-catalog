@@ -8,10 +8,14 @@ use yii\widgets\ActiveForm;
 $form = ActiveForm::begin();
 ?>
 
-<?= $form->field($model, 'full_name') ?>
+<div class="content-card">
 
-<div class="form-group">
-    <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    <?= $form->field($model, 'full_name') ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+    </div>
+
 </div>
 
 <?php ActiveForm::end(); ?>

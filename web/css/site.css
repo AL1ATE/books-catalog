@@ -212,3 +212,96 @@ a {
     display: flex;
     justify-content: space-between;
 }
+
+.page-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 22px;
+}
+
+.page-label {
+    color: #60a5fa;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+}
+
+.content-card {
+    background: linear-gradient(180deg, #111827 0%, #0f172a 100%);
+    border: 1px solid #233047;
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.22);
+}
+
+.app-table {
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.app-table thead th {
+    background: #020617;
+    color: #93c5fd;
+    border-bottom: 1px solid #334155;
+    padding: 16px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.app-table tbody td {
+    padding: 16px;
+    background: #111827;
+    border-color: #263244;
+}
+
+.app-table tbody tr:hover td {
+    background: #172033;
+}
+
+.table-title {
+    color: #ffffff;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.table-title:hover {
+    color: #93c5fd;
+}
+
+.badge-soft {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 999px;
+    background: #1e293b;
+    color: #bfdbfe;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.muted-cell {
+    color: #94a3b8 !important;
+    width: 70px;
+}
+
+.actions-cell {
+    white-space: nowrap;
+    text-align: right;
+}
+
+.grid-view {
+    background: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+}
+
+.grid-view .summary {
+    color: #cbd5e1;
+    margin-bottom: 14px;
+}

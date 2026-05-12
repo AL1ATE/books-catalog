@@ -22,6 +22,15 @@ class AuthorSubscription extends ActiveRecord
         ];
     }
 
+    public function attributeLabels(): array
+    {
+        return [
+            'author_id' => 'Автор',
+            'phone' => 'Телефон',
+            'created_at' => 'Создана',
+        ];
+    }
+
     public function getAuthor()
     {
         return $this->hasOne(Author::class, ['id' => 'author_id']);

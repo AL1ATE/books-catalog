@@ -13,15 +13,15 @@ $this->title = $model->title;
 <h1><?= Html::encode($model->title) ?></h1>
 
 <p>
-    <?= Html::a('Back', ['index'], ['class' => 'btn btn-outline-light']) ?>
+    <?= Html::a('Назад', ['index'], ['class' => 'btn btn-outline-light']) ?>
 
     <?php if (!Yii::$app->user->isGuest): ?>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
 
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Delete this book?',
+                'confirm' => 'Удалить эту книгу?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -48,7 +48,7 @@ $this->title = $model->title;
         'isbn',
         'description:ntext',
         [
-            'label' => 'Authors',
+            'label' => 'Авторы',
             'format' => 'raw',
             'value' => static function (Book $book) {
                 return implode('<br>', array_map(

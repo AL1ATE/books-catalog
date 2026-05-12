@@ -19,6 +19,16 @@ class Author extends ActiveRecord
         ];
     }
 
+    public function attributeLabels(): array
+    {
+        return [
+            'id' => 'ID',
+            'full_name' => 'ФИО автора',
+            'created_at' => 'Создан',
+            'updated_at' => 'Обновлён',
+        ];
+    }
+
     public function getBooks()
     {
         return $this->hasMany(Book::class, ['id' => 'book_id'])
