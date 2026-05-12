@@ -34,3 +34,9 @@ $this->title = $model->full_name;
         'updated_at:datetime',
     ],
 ]) ?>
+
+<?php if (Yii::$app->user->isGuest): ?>
+    <?= $this->render('_subscribe', [
+        'author' => $model,
+    ]) ?>
+<?php endif; ?>
