@@ -1,234 +1,209 @@
-<p align="center">
-    <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="https://www.yiiframework.com/image/design/logo/yii3_full_for_dark.svg">
-        <source media="(prefers-color-scheme: light)" srcset="https://www.yiiframework.com/image/design/logo/yii3_full_for_light.svg">
-        <img src="https://www.yiiframework.com/image/design/logo/yii3_full_for_light.svg" alt="Yii Framework" height="100">
-    </picture>
-    <h1 align="center">Yii 2 Basic Project Template</h1>
-    <br>
-</p>
+# Books Catalog
 
-Yii 2 Basic Project Template is a skeleton [Yii 2](https://www.yiiframework.com/) application best for
-rapidly creating small projects.
+## Архитектура проекта
 
-The template contains the basic features including user login/logout and a contact page.
-It includes all commonly used configurations that would allow you to focus on adding new
-features to your application.
+### Основные сущности
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-basic.svg?style=for-the-badge&label=Stable&logo=packagist)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-basic.svg?style=for-the-badge&label=Downloads)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![build](https://img.shields.io/github/actions/workflow/status/yiisoft/yii2-app-basic/build.yml?style=for-the-badge&logo=github&label=Build)](https://github.com/yiisoft/yii2-app-basic/actions?query=workflow%3Abuild)
-[![codecov](https://img.shields.io/codecov/c/github/yiisoft/yii2-app-basic.svg?style=for-the-badge&logo=codecov&logoColor=white&label=Codecov)](https://codecov.io/gh/yiisoft/yii2-app-basic)
-[![Static Analysis](https://img.shields.io/github/actions/workflow/status/yiisoft/yii2-app-basic/static.yml?style=for-the-badge&label=Static)](https://github.com/yiisoft/yii2-app-basic/actions/workflows/static.yml)
+#### Book
 
-<picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/images/home-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="docs/images/home-light.png">
-    <img src="docs/images/home-light.png" alt="Web Application Basic">
-</picture>
+Книга содержит:
 
-## Docker
+- название
+- год издания
+- краткое описание
+- ISBN
+- изображение обложки
 
-[![Apache](https://img.shields.io/github/actions/workflow/status/yiisoft/yii2-app-basic/docker.yml?style=for-the-badge&logo=apache&label=Apache)](https://github.com/yiisoft/yii2-app-basic/actions/workflows/docker.yml)
+Одна книга может иметь несколько авторов
 
-DIRECTORY STRUCTURE
--------------------
+#### Author
 
-      assets/             contains assets definition
-      commands/           contains console commands (controllers)
-      config/             contains application configurations
-      controllers/        contains Web controller classes
-      mail/               contains view files for e-mails
-      models/             contains model classes
-      runtime/            contains files generated during runtime
-      tests/              contains various tests for the basic application
-      vendor/             contains dependent 3rd-party packages
-      views/              contains view files for the Web application
-      web/                contains the entry script and Web resources
+Автор содержит:
 
-REQUIREMENTS
-------------
+- ФИО.
 
-The minimum requirement by this project template that your Web server supports PHP 8.2.
+Один автор может быть связан с несколькими книгами
 
-INSTALLATION
-------------
+#### BookAuthor
 
-> [!IMPORTANT]
-> - The minimum required [PHP](https://www.php.net/) version of Yii is PHP `8.2`.
+Промежуточная таблица для связи many-to-many между книгами и авторами
 
-## Install via Composer
+#### AuthorSubscription
 
-If you do not have [Composer](https://getcomposer.org/), you may install it by following the instructions
-at [getcomposer.org](https://getcomposer.org/doc/00-intro.md#installation-nix).
+Подписка гостя на автора
 
-You can then install this project template using the following command:
+Для подписки нужен только номер телефона. Если для этого автора добавляется новая книга, подписчику отправляется SMS
 
-~~~
-composer create-project --prefer-dist yiisoft/yii2-app-basic basic
-~~~
+#### User
 
-Now you should be able to access the application through the following URL, assuming `basic` is the directory
-directly under the Web root.
+Пользователь для входа в систему
 
-~~~
-http://localhost/basic/web/
-~~~
+Авторизованный пользователь может создавать, редактировать и удалять книги и авторов
 
-## Install from an Archive File
+## Логика доступа
 
-Extract the archive file downloaded from [yiiframework.com](https://www.yiiframework.com/download/) to
-a directory named `basic` that is directly under the Web root.
+### Гость
 
-Set cookie validation key in `config/web.php` file to some random secret string:
+Может:
 
-```php
-'request' => [
-    // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-    'cookieValidationKey' => '<secret random string goes here>',
-],
+- смотреть каталог книг
+- смотреть авторов
+- смотреть отчёт
+- подписаться на новые книги конкретного автора
+
+Гость не может:
+
+- создавать книги
+- редактировать книги
+- удалять книги
+- создавать авторов
+- редактировать авторов
+- удалять авторов
+
+### Авторизованный пользователь
+
+Авторизованный пользователь может:
+
+- смотреть книги
+- создавать книги
+- редактировать книги
+- удалять книги
+- смотреть авторов
+- создавать авторов
+- редактировать авторов
+- удалять авторов
+
+## Как развернуть проект
+
+### Клонировать репозиторий
+
+```bash
+git clone git@github.com:AL1ATE/books-catalog.git
+cd books-catalog
 ```
 
-You can then access the application through the following URL:
+### Собрать и запустить контейнеры
 
-~~~
-http://localhost/basic/web/
-~~~
-
-## Install with Docker
-
-Update your vendor packages
-
-    docker-compose run --rm php composer update --prefer-dist
-    
-Run the installation triggers (creating cookie validation code)
-
-    docker-compose run --rm php composer install    
-    
-Start the container
-
-    docker-compose up -d
-    
-You can then access the application through the following URL:
-
-    http://127.0.0.1:8000
-
-Run tests inside the container
-
-    docker compose exec -T php vendor/bin/codecept build
-    docker compose exec -T php vendor/bin/codecept run
-
-**NOTES:** 
-- Minimum required Docker engine version `17.04` for development (see [Performance tuning for volume mounts](https://docs.docker.com/docker-for-mac/osxfs-caching/))
-- The default configuration uses a host-volume in your home directory `~/.composer-docker/cache` for Composer caches
-
-
-CONFIGURATION
--------------
-
-## Database
-
-Edit the file `config/db.php` with real data, for example:
-
-```php
-return [
-    'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
-    'username' => 'root',
-    'password' => '1234',
-    'charset' => 'utf8',
-];
+```bash
+docker compose up -d --build
 ```
 
-**NOTES:**
-- Yii won't create the database for you, this has to be done manually before you can access it.
-- Check and edit the other files in the `config/` directory to customize your application as required.
-- Refer to the README in the `tests` directory for information specific to basic application tests.
+### Установить зависимости
 
-TESTING
--------
-
-Tests are located in `tests` directory. They are developed with [Codeception PHP Testing Framework](https://codeception.com/).
-By default, there are 3 test suites:
-
-- `unit`
-- `functional`
-- `acceptance`
-
-Tests can be executed by running
-
-```
-vendor/bin/codecept run --env php-builtin
+```bash
+docker exec -it books_app composer install
 ```
 
-The command above will execute unit and functional tests. Unit tests are testing the system components, while functional
-tests are for testing user interaction.
+### Выполнить миграции
 
-
-## Acceptance tests
-
-The `acceptance` suite is configured in `tests/Acceptance.suite.yml`.
-
-### Acceptance tests (PhpBrowser)
-
-By default, acceptance tests use the `PhpBrowser` module and run against the built-in PHP web server started via the
-`php-builtin` environment.
-
-```
-# run all tests with built-in web server
-composer tests
-
-# run acceptance tests only
-vendor/bin/codecept run Acceptance --env php-builtin
+```bash
+docker exec -it books_app php yii migrate
 ```
 
-### Acceptance tests (WebDriver + Selenium)
+### Создать администратора
 
-To run acceptance tests in a real browser, switch the `acceptance` suite to use the `WebDriver` module.
-`tests/Acceptance.suite.yml` contains an example WebDriver configuration (commented).
-
-1. Download and start [Selenium Server](https://www.selenium.dev/downloads/).
-2. Install the corresponding browser driver (for example. [GeckoDriver](https://github.com/mozilla/geckodriver/releases) or
-   [ChromeDriver](https://googlechromelabs.github.io/chrome-for-testing/)).
-3. Update `tests/Acceptance.suite.yml` to enable `WebDriver` and disable `PhpBrowser`.
-4. Run:
-
-```
-vendor/bin/codecept run Acceptance --env php-builtin
+```bash
+docker exec -it books_app php yii user/create-admin
 ```
 
-## Code coverage support
+После этого будет доступен пользователь:
 
-Code coverage is configured in `codeception.yml`. You can run your tests and collect coverage with the following command:
-
-```
-#collect coverage for all tests
-vendor/bin/codecept run --coverage --coverage-html --coverage-xml --env php-builtin
-
-#collect coverage only for unit tests
-vendor/bin/codecept run Unit --coverage --coverage-html --coverage-xml --env php-builtin
-
-#collect coverage for unit and functional tests
-vendor/bin/codecept run Functional,Unit --coverage --coverage-html --coverage-xml --env php-builtin
+```text
+Логин: admin
+Пароль: admin123
 ```
 
-You can see code coverage output under the `tests/Support/output` directory.
+## Тест проекта
 
-## Documentation
+### Создание автора
 
-- [Internals](docs/internals.md)
+1. Войти под admin
+2. Открыть раздел `Авторы`
+3. Нажать `+ Добавить автора`
+4. Заполнить ФИО
+5. Сохранить
 
-## Support the project
+### Создание книги
 
-[![Open Collective](https://img.shields.io/badge/Open%20Collective-sponsor-7eadf1?style=for-the-badge&logo=open%20collective&logoColor=7eadf1&labelColor=555555)](https://opencollective.com/yiisoft)
+1. Войти под admin
+2. Открыть раздел `Книги`
+3. Нажать `+ Добавить книгу`
+4. Заполнить:
+   - название
+   - год издания
+   - ISBN
+   - описание
+   - авторов
+   - обложку
+5. Сохранить
 
-## Follow updates
+### Подписка на автора
 
-[![Official website](https://img.shields.io/badge/Powered_by-Yii_Framework-green.svg?style=for-the-badge&logo=yii)](https://www.yiiframework.com/)
-[![Follow on X](https://img.shields.io/badge/-Follow%20on%20X-1DA1F2.svg?style=for-the-badge&logo=x&logoColor=white&labelColor=000000)](https://x.com/yiiframework)
-[![Telegram](https://img.shields.io/badge/telegram-join-1DA1F2?style=for-the-badge&logo=telegram)](https://t.me/yii_framework_in_english)
-[![Slack](https://img.shields.io/badge/slack-join-1DA1F2?style=for-the-badge&logo=slack)](https://yiiframework.com/go/slack)
+1. Выйти из аккаунта
+2. Открыть страницу автора
+3. Ввести номер телефона
+4. Нажать `Подписаться`
 
-## License
+Пример телефона:
 
-[![License](https://img.shields.io/badge/License-BSD--3--Clause-brightgreen.svg?style=for-the-badge&logo=opensourceinitiative&logoColor=white&labelColor=555555)](LICENSE.md)
+```text
++79991234567
+```
+
+### SMS-уведомление
+
+Когда авторизованный пользователь добавляет новую книгу и выбирает автора, у которого есть подписчики, проект вызывает SMS-сервис
+
+SMS отправляется через отдельный сервис:
+
+```text
+services/SmsService.php
+```
+
+Логика создания книги и уведомления подписчиков находится отдельно:
+
+```text
+services/BookService.php
+```
+
+Контроллер не занимается отправкой SMS напрямую
+
+### Проверить подписку
+
+Выйти из аккаунта
+
+Открыть страницу автора и подписаться по номеру телефона
+
+Проверить запись в базе:
+
+```bash
+docker exec -it books_mysql mysql -ubooks_user -pbooks_password books_catalog -e "SELECT * FROM author_subscription;"
+```
+
+Ожидаемый результат:
+
+- появилась запись с `author_id` и `phone`.
+
+### Проверить SMS
+
+1. Подписаться на автора
+2. Войти под admin
+3. Создать новую книгу
+4. Выбрать этого автора
+5. Сохранить книгу
+
+Проверить лог SMS:
+
+```bash
+docker exec -it books_app cat runtime/logs/sms.log
+```
+
+Ожидаемый результат:
+
+- в логе появилась запись с телефоном, текстом сообщения и ответом smspilot
+
+Пример:
+
+```text
+phone=+79991234567 message=Новая книга: Название книги
+```
